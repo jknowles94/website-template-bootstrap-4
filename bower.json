@@ -1,0 +1,21 @@
+{
+  "name": "website-template-bootstrap-4",
+  "homepage": "https://github.com/jknowles94/website-template-bootstrap-4",
+  "authors": [
+    "Jake Knowles <jakeyknowles@hotmail.co.uk>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "bootstrap": "v4.0.0-beta"
+  }
+}
