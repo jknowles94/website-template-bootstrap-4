@@ -1,0 +1,26 @@
+{
+  "name": "website-template-bootstrap-4",
+  "version": "1.0.0",
+  "description": "Website Template quick set up using Bootstrap 4-beta (https://getbootstrap.com/docs/4.0/migration/)",
+  "devDependencies": {
+    "browser-sync": "^2.18.13",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-inject": "^4.2.0",
+    "gulp-postcss": "^7.0.0",
+    "gulp-uglify": "^3.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jknowles94/website-template-bootstrap-4.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jknowles94/website-template-bootstrap-4/issues"
+  },
+  "homepage": "https://github.com/jknowles94/website-template-bootstrap-4#readme"
+}

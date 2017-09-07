@@ -2,6 +2,16 @@
 
 Website Template quick set up using Bootstrap 4-beta (https://getbootstrap.com/docs/4.0/migration/)
 
-Also changing Task Runner from Grunt to Gulp
+https://github.com/postcss/gulp-postcss
 
-Inlcude the same Bower components from Old template
+https://browsersync.io/docs/gulp/
+
+https://github.com/contra/gulp-concat
+
+https://github.com/terinjokes/gulp-uglify
+
+https://github.com/terinjokes/gulp-uglify/blob/master/docs/why-use-pump/README.md#why-use-pump
+
+https://www.npmjs.com/package/gulp-inject
+
+https://github.com/gulpjs/gulp-util
