@@ -1,0 +1,437 @@
+// ----- Mixins -----
+
+// REM  mixin - http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@function parseInt($n) { 
+    @return $n / ($n * 0 + 1);
+}
+
+@mixin rem($property, $values) {
+    $px : (); 
+    $rem: (); 
+
+    @each $value in $values { 
+
+        @if $value == 0 or $value == auto { 
+            $px : append($px , $value);
+            $rem: append($rem, $value);
+        } @else { 
+            $unit: unit($value);   
+            $val: parseInt($value); 
+
+            @if $unit == "px" {  
+                $px : append($px,  $value);
+                $rem: append($rem, ($val / 10 + rem));
+            }
+
+            @if $unit == "rem" { 
+                $px : append($px,  ($val * 10 + px));
+                $rem: append($rem, $value);
+            }
+        }
+    }
+
+    @if $px == $rem {     
+        #{$property}: $px;  
+    } @else {
+        #{$property}: $px;  
+        #{$property}: $rem;
+    }
+}
+
+
+// Setup a webfont path (version is used by fontello)
+@mixin webfont($name, $fileName, $filePath, $version) {
+    $fontVersion: '';
+    @if $version != '' {
+        $fontVersion: '?' + $version;
+    }
+
+    $fontEOT: $filePath + $fileName + '.eot' + $fontVersion;
+    $fontEOTIE: $filePath + $fileName + '.eot' + $fontVersion + '#iefix';
+    $fontWOFF: $filePath + $fileName + '.woff' + $fontVersion;
+    $fontTTF: $filePath + $fileName + '.ttf' + $fontVersion;
+    $fontSVG: $filePath + $fileName + '.eot' + $fontVersion + '#' + $name;
+
+    font-family: $name;
+    src: url($fontEOT);
+    src: url($fontEOTIE) format('embedded-opentype'),
+    url($fontWOFF) format('woff'),
+    url($fontTTF) format('truetype'),
+    url($fontSVG) format('svg');
+}
+
+
+// Creates a triangle shape on an element http://css-tricks.com/examples/ShapesOfCSS/
+// E.G. @include triangle(down, 10px, $color-red, 10px, top); 
+// Creates a pointing down triangle, 10px in size, colour red red, left: 10px and top: 0
+
+// E.G. with optional arguments @include triangle(down, 10px, $color-red, 10px, 10px, right, bottom, before); 
+// Creates a pointing down triangle, 10px in size, colour red red, right: 10px, bottom: 10px on the before pseudo element;
+
+// E.G. double down triangle, second triangle is not antialiased to make the line thinner
+// @include triangle(down, 10px, $color-red, 10px, 10px, $positionPseudo: 'after'); 
+// @include triangle(down, 12px, #000, 8px, 10px, $positionPseudo: 'before', $antialias: false); 
+
+@mixin triangle($dir, $size, $color, $positionX, $positionY, $positionXProperty: 'left', $positionYProperty: 'top', $positionPseudo: 'before', $antialias: true) { 
+
+    position: relative;
+
+    $transform: '';
+
+    &:#{$positionPseudo} {
+        position: absolute;
+        content: '';
+        width: 0; 
+        height: 0; 
+        border: $size transparent solid;
+
+        // The direction of the triangle
+        @if ($dir == "top" or $dir == "up") {
+            border-bottom-color: $color;
+        }
+        @else if ($dir == "right" or $dir == "after") {
+            border-left-color: $color;
+        }
+        @else if ($dir == "bottom" or $dir == "down") {
+            border-top-color: $color;
+        }
+        @else if ($dir == "left" or $dir == "before") {
+            border-right-color: $color;
+        }
+
+        // The X position of the triangle
+        @if ($positionX == "left") {
+            left: 0;
+        }
+        @else if ($positionX == "right") {
+            right: 0;
+        }
+        @else if ($positionX == "center") {
+            left: 50%;
+            $transform: translateX(-50%);
+        }
+        @else {
+            #{$positionXProperty}: #{$positionX};
+        }
+
+        // The Y position of the triangle
+        @if ($positionY == "top") {
+            top: 0;
+        }
+        @else if ($positionY == "bottom") {
+            bottom: 0;
+        }
+        @else if ($positionY == "center") {
+            top: 50%;
+            $transform: #{$transform} translateY(-50%);
+        }
+        @else {
+            #{$positionYProperty}: #{$positionY};
+        }
+
+        // Antialias the shape
+        @if $antialias { 
+            $transform: #{$transform} scale(0.9999); 
+        }
+
+        transform: #{$transform};
+    }
+}
+
+
+// Centrally align a block, align parent 3d option should be enabled if the block becomes blurry - http://zerosixthree.se/vertical-align-anything-with-just-3-lines-of-css/
+// E.G. @include align-center() aligns an element vertically
+// E.G. @include align-center($parent: true, $parent3d: true) sets up parent element
+@mixin align-center($axis: 'vertical', $parent: false, $parent3d: false) { 
+
+    $transform: '';
+
+    // Child element
+    @if ($parent != true) {
+        display: block;
+        position: absolute;
+
+        // Horizontally center
+        @if ($axis == 'horizontal' or $axis == 'both') {
+            left: 50%;
+            $transform: translateX(-50%);
+        }
+
+        // Vertically center
+        @if ($axis == 'vertical' or $axis == 'both') {
+            top: 50%;
+            $transform: #{$transform} translateY(-50%);
+        }
+
+        transform: #{$transform};
+
+    }
+    // Parent element
+    @else {
+        overflow: hidden;
+
+        @if ($parent3d) {
+            transform-style: preserve-3d;
+        }
+
+    }
+
+}
+
+// http://lukyvj.github.io/family.scss/
+// Nth-term mixin
+
+/// Select all children from the first to `$num`.
+/// @group with-arguments
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+/// @param {number} $num - id of the child
+@mixin first($num) {
+  &:nth-child(-n + #{$num}) {
+    @content;
+  }
+}
+
+/// Select all children from the last to `$num`.
+/// @group with-arguments
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+/// @param {number} $num - id of the child
+@mixin last($num) {
+   &:nth-last-child(-n + #{$num}) {
+    @content;
+  }
+}
+
+/// Select all children after the first to `$num`.
+/// @group with-arguments
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+/// @param {number} $num - id of the child
+@mixin after-first($num) {
+  &:nth-child(n + #{$num + 1}) {
+    @content;
+  }
+}
+
+/// Select all children before `$num` from the last.
+/// @group with-arguments
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+/// @param {number} $num - id of the child
+@mixin from-end($num) {
+  &:nth-last-child(#{$num}) {
+   @content;
+  }
+}
+
+/// Select all children between `$first` and `$last`.
+/// @group with-arguments
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+@mixin between($first, $last) {
+  &:nth-child(n + #{$first}):nth-child(-n + #{$last}) {
+    @content;
+  }
+}
+
+/// Select all even children between `$first` and `$last`.
+/// @group with-arguments
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+@mixin pair-between($first, $last) {
+  &:nth-child(even):nth-child(n + #{$first}):nth-child(-n + #{$last}) {
+    @content;
+  }
+}
+
+/// Select all odd children between `$first` and `$last`.
+/// @group with-arguments
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+@mixin impair-between($first, $last) {
+  &:nth-child(odd):nth-child(n + #{$first}):nth-child(-n + #{$last}) {
+    @content;
+  }
+}
+
+/// Select all `$num` children between `$first` and `$last`.
+/// @group with-arguments
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+@mixin n-between($num, $first, $last) {
+  &:nth-child(#{$num}n):nth-child(n + #{$first}):nth-child(-n + #{$last}) {
+    @content;
+  }
+}
+
+
+/// Select all children but `$num`.
+/// @group with-arguments
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+/// @param {number} $num - id of the child
+@mixin all-but($num) {
+  &:not(:nth-child(#{$num})) {
+    @content;
+  }
+}
+
+/// Select children each `$num`.
+/// @group with-arguments
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+/// @param {number} $num - id of the child
+/// @alias every
+@mixin each($num) {
+  &:nth-child(#{$num}n) {
+    @content;
+  }
+}
+
+/// Select children each `$num`.
+/// @group with-arguments
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+/// @param {number} $num - id of the child
+@mixin every($num) {
+  &:nth-child(#{$num}n) {
+    @content;
+  }
+}
+
+/// Select the `$num` child from the start and the `$num` child from the last.
+/// @group with-arguments
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+/// @param {number} $num - id of the child
+@mixin from-first-last($num) {
+  &:nth-child(#{$num}),
+  &:nth-last-child(#{$num}) {
+    @content;
+  }
+}
+
+
+/// Select the item in the middle of `$num` child. Only works with odd number
+/// chain.
+/// @group with-arguments
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+/// @param {number} $num - id of the child
+@mixin middle($num) {
+  &:nth-child(#{round($num / 2)}){
+    @content;
+  }
+}
+
+
+/// Select all children between the `$num` first and the `$num` last.
+/// @group with-arguments
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+/// @param {number} $num - id of the child
+@mixin all-but-first-last($num) {
+  &:nth-child(n + #{$num}):nth-last-child(n + #{$num}) {
+    @content;
+  }
+}
+
+
+/// This I/O mixin will only select the first of `$limit` items. It will not
+/// work if there is not as much as item as you set in `$limit`.
+/// @group io
+/// @param {number} $limit
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+@mixin first-of($limit) {
+  &:nth-last-child(#{$limit}):first-child {
+   @content;
+  }
+}
+
+/// This I/O mixin will only select the last of `$limit` items. It will not
+/// if there is not as much as item as you set in `$limit`.
+/// @group io
+/// @param {number} $limit
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+@mixin last-of($limit) {
+  &:nth-of-type(#{$limit}):nth-last-of-type(1) {
+    @content;
+  }
+}
+
+/// Select all even children.
+/// @group no-arguments
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+@mixin even() {
+  &:nth-child(even) {
+    @content;
+  }
+}
+
+/// Select all odd children.
+/// @group no-arguments
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+@mixin odd() {
+  &:nth-child(odd) {
+    @content;
+  }
+}
+
+/// Select only the first and last child.
+/// @group no-arguments
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+@mixin first-last() {
+  &:first-child,
+  &:last-child {
+    @content;
+  }
+}
+
+/// Will only select the child if it’s unique.
+/// @group no-arguments
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+/// @alias only
+@mixin unique() {
+  &:only-child {
+    @content;
+  }
+}
+
+/// Will only select the child if it’s unique.
+/// @group no-arguments
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+@mixin only() {
+  &:only-child {
+    @content;
+  }
+}
+
+/// Will only select children if they are not unique. Meaning if there is at
+/// least 2 children, the style is applied.
+/// @group no-arguments
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+@mixin not-unique() {
+  &:not(:only-child) {
+    @content;
+  }
+}
+
+
+/// This mixin is used to automatically sort z-index in numerical order. But it
+/// can also sort them in anti-numerical order, depending the parameters you use.
+/// @group using functions
+/// @content [Write the style you want to apply to the children, and it will be added within the @content directive]
+/// @param {number} $num - Number of children
+/// @param {string} $direction [forward] - Direction of the sort
+/// @param {number} $index [0] - Index of the sorting
+@mixin child-index($num, $direction: 'forward', $index: 0) {
+  @for $i from 1 through $num {
+    @if ($direction == 'forward') {
+      &:nth-child(#{$i}) {
+        z-index: order-index($i, $index);
+        @content;
+      }
+    } @else if ($direction == 'backward') {
+      &:nth-last-child(#{$i}) {
+        z-index: order-index($i, $index);
+        @content;
+      }
+    }
+  }
+}
+
+/// Used by the child-index mixin. It will returned the proper sorted numbers
+/// depending on the `$index` value.
+/// @access private
+/// @param {number} $num - Number of children
+/// @param {number} $index - Index of the sorting
+@function order-index($i, $index) {
+  @return ($index + $i);
+}

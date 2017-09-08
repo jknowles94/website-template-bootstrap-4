@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "Website Template quick set up using Bootstrap 4-beta (https://getbootstrap.com/docs/4.0/migration/)",
   "devDependencies": {
-    "browser-sync": "^2.18.13",
+    "autoprefixer": "^7.1.4",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
+    "gulp-cssnano": "^2.1.2",
     "gulp-inject": "^4.2.0",
+    "gulp-notify": "^3.0.0",
     "gulp-postcss": "^7.0.0",
-    "gulp-uglify": "^3.0.0"
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^3.0.0",
+    "wiredep": "^4.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
