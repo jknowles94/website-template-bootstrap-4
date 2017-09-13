@@ -1,18 +1,60 @@
 // ----- Modules -----
 
-// ----- Sample module -----
-.grid {
+// Extra small devices (portrait phones, less than 576px)
+@include media-breakpoint-down(xs) {  
 
-&.fullwidth { padding-bottom: 0; }
+}
 
-	.item {
-		padding: 15px;
-		margin-bottom: 30px;
-		background: #fff;
+// Small devices (landscape phones, 576px and up)
+@include media-breakpoint-up(xs) {  
 
-		> img:first-child, > .overlay-wrap:first-child {
-			margin-bottom: 20px;
-		}
-	}
+}
+
+// Small devices (landscape phones, 576px and 767px)
+@include media-breakpoint-only(sm) {
+  
+}
+
+// Small devices (landscape phones, less than 768px)
+@include media-breakpoint-down(sm) { 
+
+}
+
+
+// Medium devices (tablets, 768px and up)
+@include media-breakpoint-up(md) { 
+
+}
+
+// Medium devices (tablets, 768px - 991px)
+@include media-breakpoint-only(md) { 
+
+}
+
+// Medium devices (tablets, less than 992px)
+@include media-breakpoint-down(md) {  
+
+}
+
+
+// Medium devices (tablets, 768px and up)
+@include media-breakpoint-up(lg) {  
+
+}
+
+// Large devices (desktops, 992px and 1199px)
+@include media-breakpoint-only(lg) {  
+
+}
+
+// Large devices (desktops, less than 1200px)
+@include media-breakpoint-down(lg) {
+
+}
+
+
+// Extra large devices (large desktops, 1200px and up)
+@include media-breakpoint-up(xl) { 
+
 }
 
