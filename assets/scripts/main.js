@@ -2,16 +2,16 @@ const website = (function() {
 // Responsive state management
 	const responsiveStates = (function() {
 
-		const init = () => {
+		function init() {
 			ssm.addStates([
 				{
 					id: 'xs',
 					maxWidth: 767,
 					colorbox: false,
-					onEnter: function(){
+					onEnter: () => {
 						console.log('Enter mobile');
 					},
-					onLeave: function(){
+					onLeave: () => {
 						console.log('Leave mobile');
 					}
 				},
@@ -33,7 +33,7 @@ const website = (function() {
 			]);
 		}
 
-		const current = state => {
+		function current(state) {
 			const states = ssm.getCurrentStates();
 
 			for (let prop in states) {
@@ -53,31 +53,32 @@ const website = (function() {
         };
 	}());
 
+
 // Cookies
-  const cookiePolicy = (function(){
-  	const $cookie = $('#cookie');
+    const cookiePolicy = (function(){
+    	const $cookie = $('#cookie');
 
-      const init = () => {
-          let cookie = Cookies.get('CLIENTNAMEcookie');
+        function init() {
+            let cookie = Cookies.get('CLIENTNAMEcookie');
 
-          if(cookie === undefined){
-          	$cookie.addClass('active');
-              $cookie.on('click','.close', close);
-              Cookies.set('CLIENTNAMEcookie', 'true', { expires: 60*60*24*365 });
-          }
-          else{
-              close();
-          }
-      }
+            if(cookie === undefined){
+            	$cookie.addClass('active');
+                $cookie.on('click','.close', close);
+                Cookies.set('CLIENTNAMEcookie', 'true', { expires: 60*60*24*365 });
+            }
+            else{
+                close();
+            }
+        }
 
-      function close() {
-          $cookie.remove();
-          return false;
-      }
+        function close() {
+            $cookie.remove();
+            return false;
+        }
 
-      return {
-          init: init
-      };
+        return {
+            init: init
+        };
 	}());
 
 
@@ -85,7 +86,7 @@ const website = (function() {
 	const siteForms = (function () {
 		const $forms = $('.form-validate');
 
-		const init = () => {
+		function init() {
 			$forms.bootstrapValidator({
 				excluded: [':disabled'],
 				feedbackIcons: {
@@ -108,7 +109,7 @@ const website = (function() {
 
 // Global init function
 	return {
-		init: () => {
+		init: function () {
 			responsiveStates.init();
 
 			cookiePolicy.init();
@@ -133,6 +134,6 @@ const website = (function() {
 
 	};
 
-})();
+}());
 
 $(document).ready(website.init);
