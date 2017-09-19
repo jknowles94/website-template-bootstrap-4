@@ -9,6 +9,9 @@ var sass = require("gulp-sass");
 var wiredep = require('wiredep').stream;
 var notify = require("gulp-notify");
 
+//browsersynce to create local host
+//Babel to turn es6 to es5 to work on all browsers
+
 gulp.task("sass", function() {
   return gulp.src("assets/sass/*.scss")
     .pipe(sass().on("error", sass.logError))
