@@ -1,8 +1,8 @@
-var website = (function () {
+const website = (function() {
 // Responsive state management
-	var responsiveStates = (function() {
+	const responsiveStates = (function() {
 
-		function init() {
+		const init = () => {
 			ssm.addStates([
 				{
 					id: 'xs',
@@ -33,10 +33,10 @@ var website = (function () {
 			]);
 		}
 
-		function current(state) {
-			var states = ssm.getCurrentStates();
+		const current = state => {
+			const states = ssm.getCurrentStates();
 
-			for (var prop in states) {
+			for (let prop in states) {
 				if (states.hasOwnProperty(prop)) {
 					if (states[prop].id === state) {
 						return true;
@@ -53,40 +53,39 @@ var website = (function () {
         };
 	}());
 
-
 // Cookies
-    var cookiePolicy = (function(){
-    	var $cookie = $('#cookie');
+  const cookiePolicy = (function(){
+  	const $cookie = $('#cookie');
 
-        function init() {
-            var cookie = Cookies.get('CLIENTNAMEcookie');
+      const init = () => {
+          let cookie = Cookies.get('CLIENTNAMEcookie');
 
-            if(cookie === undefined){
-            	$cookie.addClass('active');
-                $cookie.on('click','.close', close);
-                Cookies.set('CLIENTNAMEcookie', 'true', { expires: 60*60*24*365 });
-            }
-            else{
-                close();
-            }
-        }
+          if(cookie === undefined){
+          	$cookie.addClass('active');
+              $cookie.on('click','.close', close);
+              Cookies.set('CLIENTNAMEcookie', 'true', { expires: 60*60*24*365 });
+          }
+          else{
+              close();
+          }
+      }
 
-        function close() {
-            $cookie.remove();
-            return false;
-        }
+      function close() {
+          $cookie.remove();
+          return false;
+      }
 
-        return {
-            init: init
-        };
+      return {
+          init: init
+      };
 	}());
 
 
 // Form validation, add class of .form-vaildate around the form to validate
-	var siteForms = (function () {
-		var $forms = $('.form-validate');
+	const siteForms = (function () {
+		const $forms = $('.form-validate');
 
-		function init() {
+		const init = () => {
 			$forms.bootstrapValidator({
 				excluded: [':disabled'],
 				feedbackIcons: {
@@ -109,17 +108,17 @@ var website = (function () {
 
 // Global init function
 	return {
-		init: function () {
+		init: () => {
 			responsiveStates.init();
 
 			cookiePolicy.init();
 
 			siteForms.init();
 
-			$('.cycle-slideshow').slick({
-				prevArrow: '<a href="#" class="cycle-prev"><i class="icon-chevron-left"></i></a>',
-				nextArrow: '<a href="#" class="cycle-next"><i class="icon-chevron-right"></i></a>'
-			});
+			// $('.cycle-slideshow').slick({
+			// 	prevArrow: '<a href="#" class="cycle-prev"><i class="icon-chevron-left"></i></a>',
+			// 	nextArrow: '<a href="#" class="cycle-next"><i class="icon-chevron-right"></i></a>'
+			// });
 
 			// SVG fallback
 			// if (!Modernizr.svg) {
@@ -128,12 +127,12 @@ var website = (function () {
 			// 	});
 			// }
 
-			$('input, textarea').placeholder();
+			// $('input, textarea').placeholder();
 
 		}
 
 	};
 
-}());
+})();
 
 $(document).ready(website.init);
