@@ -1,3 +1,5 @@
+"use strict";
+
 const website = (function() {
 // Responsive state management
 	const responsiveStates = (function() {
