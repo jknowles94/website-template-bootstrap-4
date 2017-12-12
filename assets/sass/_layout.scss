@@ -66,22 +66,22 @@
 .header {
     background-color: #ddd;
 }
-	.logo {
-		float: left;
-		margin: 10px 0;
-	}
-	.nav-primary {
-		float: right;
-		margin: 10px 0;
+.logo {
+	float: left;
+	margin: 10px 0;
+}
+.nav-primary {
+	float: right;
+	margin: 10px 0;
 
-		a {
-			padding: 2px;
-			margin-left: 10px;
-		}
-		a:hover, a:focus, .active {
-			color: $color-grey-medium;
-		}
+	a {
+		padding: 2px;
+		margin-left: 10px;
 	}
+	a:hover, a:focus, .active {
+		color: $color-grey-medium;
+	}
+}
 
 
 // Header image
@@ -99,16 +99,14 @@
 		max-height: 750px;
 	}
 
-		.header-text {
-			@include align-center();
-			position: absolute;
-			text-align: center;
-			color: #fff;
-		}
-			h1 { @include rem(font-size, 52px); }
+	.header-text {
+		@include align-center();
+		position: absolute;
+		text-align: center;
+		color: #fff;
+	}
+	h1 { @include rem(font-size, 52px); }
 }
-
-
 
 // ----- Cookie -----
 .cookie {
@@ -138,7 +136,6 @@
 .cookie.active { display: block; }
 
 
-
 // ----- Footer -----
 .footer {
 	@include rem(font-size, 12px);
@@ -156,69 +153,12 @@
 	}
 }
 
-	.nav-footer {
+.nav-footer {
 
-		a { 			
-			padding: 2px;
-			margin-right: 10px;
-		}
+	a { 			
+		padding: 2px;
+		margin-right: 10px;
 	}
-
-// Extra small devices (portrait phones, less than 576px)
-@include media-breakpoint-down(xs) {  
-
 }
 
-// Small devices (landscape phones, 576px and up)
-@include media-breakpoint-up(xs) {  
-
-}
-
-// Small devices (landscape phones, 576px and 767px)
-@include media-breakpoint-only(sm) {
-	
-}
-
-// Small devices (landscape phones, less than 768px)
-@include media-breakpoint-down(sm) { 
-
-}
-
-
-// Medium devices (tablets, 768px and up)
-@include media-breakpoint-up(md) { 
-
-}
-
-// Medium devices (tablets, 768px - 991px)
-@include media-breakpoint-only(md) { 
-
-}
-
-// Medium devices (tablets, less than 992px)
-@include media-breakpoint-down(md) {  
-
-}
-
-
-// Medium devices (tablets, 768px and up)
-@include media-breakpoint-up(lg) {  
-
-}
-
-// Large devices (desktops, 992px and 1199px)
-@include media-breakpoint-only(lg) {  
-
-}
-
-// Large devices (desktops, less than 1200px)
-@include media-breakpoint-down(lg) {
-
-}
-
-
-// Extra large devices (large desktops, 1200px and up)
-@include media-breakpoint-up(xl) { 
-
-}
 
