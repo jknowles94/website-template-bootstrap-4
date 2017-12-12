@@ -11,15 +11,17 @@ var notify = require("gulp-notify");
 
 //browsersynce to create local host
 //Babel to turn es6 to es5 to work on all browsers
+//reportError
+//Nodemon - restart server
 
-gulp.task("sass", function() {
+gulp.task("sass", () => {
   return gulp.src("assets/sass/*.scss")
     .pipe(sass().on("error", sass.logError))
     .pipe(gulp.dest("assets/styles"))
     .pipe(notify("Sass Updated"))
 });
 
-gulp.task("postCss", function() {
+gulp.task("postCss", () => {
   var plugins = [
     autoprefixer({browsers: ["last 3 version"]}),
     cssNano()
@@ -30,7 +32,7 @@ gulp.task("postCss", function() {
 
 //On setup run Inject to add your files to the index.html
 
-gulp.task("inject", function() {
+gulp.task("inject", () => {
   var target = gulp.src("index.html");
   var sources = gulp.src(["assets/scripts/*.js", "assets/styles/*.css"], {read: false});
 
@@ -38,18 +40,18 @@ gulp.task("inject", function() {
     .pipe(gulp.dest("."));
 });
 
-gulp.task("wiredep", function() {
+gulp.task("wiredep", () => {
   gulp.src('index.html')
     .pipe(wiredep({}))
     .pipe(gulp.dest('.'))
 });
 
-gulp.task("watch", function() {
+gulp.task("watch", () => {
   gulp.watch("assets/sass/*.scss", ["sass", "postCss"]);
   gulp.watch("bower.json", ["wiredep"]);
 });
 
-gulp.task("build", function() {
+gulp.task("build", () => {
   //concat all plugins into here
   //concat all scripts you made into a scripts file
   //uglify both scripts
