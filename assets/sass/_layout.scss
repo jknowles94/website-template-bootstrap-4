@@ -3,20 +3,19 @@
 // Custom containers and columns
 .fullwidth, .fullwidth-sm, .fullwidth-lg, .fullwidth-np, .fullwidth-bg {
 	width: 100%;
-	@include clearfix();
 	clear: both;
 }
 .fullwidth-lg {
-	padding-top: 45px;
-	padding-bottom: 45px;
+	padding-top: $spacing-lg;
+	padding-bottom: $spacing-lg;
 }
 .fullwidth {
-	padding-top: 30px;
-	padding-bottom: 30px;
+	padding-top: $spacing-default;
+	padding-bottom: $spacing-default;
 }
 .fullwidth-sm {
-	padding-top: 15px;
-	padding-bottom: 15px;
+	padding-top: $spacing-small;
+	padding-bottom: $spacing-small;
 }
 .fullwidth-bg, .fullwidth-np {
 	padding-top: 0;
@@ -28,14 +27,28 @@
 	background-size: cover;
 }
 
-	.col-np {
-		padding-left: 0;
-		padding-right: 0;
+.col-np {
+	padding-left: 0;
+	padding-right: 0;
+}
+.col-lp {
+	padding-left: $spacing-default;
+	padding-right: $spacing-default;
+}
+
+.img-responsive {
+	max-width: 100%;
+	display: block;
+	margin: 0 auto;
+
+	&.left {
+		margin: 0 0 auto;
 	}
-	.col-lp {
-		padding-left: 30px;
-		padding-right: 30px;
+
+	&.right {
+		margin: 0 auto 0;
 	}
+}
 
 
 // Background colours/patterns
@@ -56,109 +69,19 @@
 .panel-outro { @include rem(margin-top, 45px); }
 
 .text-block {
-	padding: 15px;
+	padding: $spacing-small;
 	background-color: #fff;
 }
 
 
 
 // ----- Header -----
-.header {
-    background-color: #ddd;
-}
-.logo {
-	float: left;
-	margin: 10px 0;
-}
-.nav-primary {
-	float: right;
-	margin: 10px 0;
-
-	a {
-		padding: 2px;
-		margin-left: 10px;
-	}
-	a:hover, a:focus, .active {
-		color: $color-grey-medium;
-	}
-}
 
 
-// Header image
-.header-img {
-	position: relative;
-	overflow: hidden;
 
-	.item, img, .header-text { width: 100%; }
 
-	.item { 
-		max-height: 450px;
-		overflow: hidden;
-	}
-	&.header-img-lg .item { 
-		max-height: 750px;
-	}
-
-	.header-text {
-		@include align-center();
-		position: absolute;
-		text-align: center;
-		color: #fff;
-	}
-	h1 { @include rem(font-size, 52px); }
-}
-
-// ----- Cookie -----
-.cookie {
-	display: none; 
-	text-align: left;
-	@include rem(font-size, 14px); 
-	background: $color-grey-medium;
-
-	.container {
-		position: relative;
-		padding-right: 45px;
-	}
-		.cookie-text {
-			float: left;
-			margin-right: 10px;
-			margin-bottom: 4px;
-		}
-			.btn { 
-				float: left; 
-			}
-			.cookie-close { 
-				position: absolute;
-				right: 15px;
-				@include rem(font-size, 32px); 
-			}
-}
-.cookie.active { display: block; }
 
 
 // ----- Footer -----
-.footer {
-	@include rem(font-size, 12px);
-	background: $color-grey-light;
-
-	.nav-social {
-		float: right;
-
-		a {
-			padding: 2px 4px;
-			margin-left: 10px;
-			@include rem(font-size, 20px);
-			color: #fff;
-		}
-	}
-}
-
-.nav-footer {
-
-	a { 			
-		padding: 2px;
-		margin-right: 10px;
-	}
-}
 
 

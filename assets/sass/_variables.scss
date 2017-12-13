@@ -10,6 +10,10 @@ $color-twitter: 			#29abe2;
 $color-instagram: 			#998575;
 $color-youtube: 			#ed3437;
 
+//Spacing
+$spacing-small:				15px;
+$spacing-default: 		calc(#{$spacing-small} * 2);
+$spacing-lg:					calc(#{$spacing-small} * 3);
 
 // Fonts
 $font-regular:				Arial, "Helvetica Neue", Helvetica, sans-serif;
