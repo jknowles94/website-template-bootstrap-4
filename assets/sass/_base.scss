@@ -125,3 +125,17 @@ nav ul { list-style: none; list-style-image: none; }
 	}
 }
 
+.img-responsive {
+	max-width: 100%;
+	display: block;
+	margin: 0 auto;
+
+	&.left {
+		margin: 0 0 auto;
+	}
+
+	&.right {
+		margin: 0 auto 0;
+	}
+}
+
